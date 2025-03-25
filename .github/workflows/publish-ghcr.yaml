@@ -1,0 +1,16 @@
+
+name: Publish Docker image
+
+on:
+  push:
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the image
+        run: |
+          docker login --username meydetour --password ${{secrets.SECRET_PAT}} ghcr.io
+          docker build . -tag ghcr.io/meydetour/symfony-docker-image:latest
+          docker push ghcr.io/meydetour/symfony-docker-image:latest
